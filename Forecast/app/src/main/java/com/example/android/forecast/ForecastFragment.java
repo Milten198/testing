@@ -87,7 +87,7 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    class FetchWeatherTask extends AsyncTask<String, Void, Void> {
+    class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
@@ -137,7 +137,7 @@ public class ForecastFragment extends Fragment {
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
                 description = weatherObject.getString(OWM_DESCRIPTION);
 
-                JSONObject temperatureObject = dayForecast.getJSONArray(OWM_TEMPERATURE).getJSONObject(0);
+                JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
                 highAndLow = formatHighLows(high, low);
@@ -151,7 +151,7 @@ public class ForecastFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
 
             if (params.length == 0) {
                 return null;
