@@ -144,11 +144,11 @@ public class ForecastFragment extends Fragment {
 
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
-
+            for (String s : resultStrs) {
+                Log.v(LOG_TAG, "Forecast entry: " + s);
+            }
             return resultStrs;
         }
-
-
 
         @Override
         protected Void doInBackground(String... params) {
@@ -225,6 +225,12 @@ public class ForecastFragment extends Fragment {
                         Log.e("ForecastFragment", "Error closing stream", e);
                     }
                 }
+            }
+            try {
+                return getWeatherDataFormJson(forecastJsonStr, numDays);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
             }
             return null;
         }
